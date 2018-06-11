@@ -1,29 +1,25 @@
 #!/usr/bin/env python3
 # Copyright (c) 2018 Chris Heckler <hecklerchris@hotmail.com>
 
-from flask import Flask, render_template
-app = Flask(__name__, template_folder='templates')
+from flask import Flask, request
+from urllib import unquote_plus
+import json
+import re
+ 
+app = Flask(__name__)
 
-# Home page for this app
-@app.route('/')
-def home_page():
-    return render_template('home.html')
+def parse_request(req):
+    # Parses requests body into dictionary
+    
+    payload = req.get_data()
+    payload = unquote_plus(payload)
+    payload = re.sub('payload=', '', payload)
+    payload = json.loads(payload)
 
-@app.route('/add')
-def add_num():
-    return render_template('add_num.html')
+    return payload
 
-@app.route('/sub')
-def add_num():
-    return render_template('sub_num.html')
 
-@app.route('/mult')
-def add_num():
-    return render_template('mult_num.html')
 
-@app.route('/div')
-def add_num():
-    return render_template('div_num.html')
 
 if __name__=='__main__':
     app.run(debug=True)
