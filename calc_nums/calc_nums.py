@@ -56,6 +56,23 @@ def mult_nums():
     b = request.args.get('b',0,type=int)
     return jsonify(a * b) 
 
+
+@app.route('/api/div', methods=['GET'])
+def div_nums():
+    """
+    Sends a request and returns the sum of the variables.
+    """
+    a = request.args.get('a',0,type=int)
+    b = request.args.get('b',0,type=int)
+    
+    try:
+        return jsonify(a / b) 
+
+    except ZeroDivisionError :
+        error = 'Cannot divide by 0!'
+        return error
+
+
 if __name__ == '__main__':
     app.run(debug=True)
 
