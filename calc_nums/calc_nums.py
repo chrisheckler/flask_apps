@@ -60,7 +60,7 @@ def mult_nums():
 @app.route('/api/div', methods=['GET'])
 def div_nums():
     """
-    Sends a request and returns the sum of the variables.
+    Sends a request and returns the divided nums.
     """
     a = request.args.get('a', 0, type=int)
     b = request.args.get('b', 0, type=int)
