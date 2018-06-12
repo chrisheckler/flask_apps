@@ -2,7 +2,7 @@
 # Copyright (c) 2018 Chris Heckler <hecklerchris@hotmail.com>
 
 from flask import Flask, request
-from urllib import unquote_plus
+import urllib
 import json
 import re
  
@@ -18,7 +18,14 @@ def parse_request(req):
 
     return payload
 
-
+@app.route('/', methods=['GET'])
+def index():
+    """
+    Index page describing app
+    """
+    return ("This api performs calculations on a pair of numbers.  " + 
+            "These calculations include addition, subtraction, division," +
+            "and multiplication.", 200, None)
 
 
 if __name__=='__main__':
