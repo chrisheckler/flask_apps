@@ -36,6 +36,17 @@ def add_nums():
     b = request.args.get('b',0,type=int)
     return jsonify(a + b) 
 
+
+@app.route('/api/sub', methods=['GET'])
+def sub_nums():
+    """
+    Sends a request and returns the sum of the variables.
+    """
+    a = request.args.get('a',0,type=int)
+    b = request.args.get('b',0,type=int)
+    return jsonify(a - b) 
+
+
 if __name__ == '__main__':
     app.run(debug=True)
 
