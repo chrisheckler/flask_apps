@@ -1,6 +1,6 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 # Copyright (c) 2018 Chris Heckler <hecklerchris@hotmail.com>
-from flask import Flask, jsonify, abort
+from flask import Flask, jsonify, abort, make_response
 
 app = Flask(__name__)
 
@@ -18,6 +18,11 @@ tasks = [
         'done': False
     }
 ]
+
+
+@app.errorhandler(404)
+def not_found(error):
+    return make_response(jsonify({'error': 'Not Found'}), 404)
 
 
 @app.route('/todo/api/v1.0/tasks', methods=['GET'])
