@@ -22,13 +22,14 @@ tasks = [
     }
 ]
 
+
 # Helper function to convert ID into URI
 def make_public_task(task):
     new_task = {}
     for field in task:
         if field == 'id':
-            new_task['uri'] = url_for('get_task', task_id=task['id'], 
-                                      _external = True)
+            new_task['uri'] = url_for('get_task', task_id=task['id'],
+                                      _external=True)
         else:
             new_task[field] = task[field]
     return new_task
@@ -62,7 +63,7 @@ def get_tasks():
 
 @app.route('/todo/api/v1.0/tasks', methods=['POST'])
 def create_task():
-    if not request.json or not 'title' in request.json:
+    if not request.json or 'title' not in request.json:
         abort(400)
     task = {
          'id': tasks[-1]['id'] + 1,
@@ -83,15 +84,18 @@ def update_task(task_id):
         abort(400)
     if 'title' in request.json and type(request.json['title']) != str:
         abort(400)
-    if 'description' in request.json and type(request.json['description']) != str:
+    if 'description' in request.json and \
+            type(request.json['description']) != str:
         abort(400)
-    if 'done' in request.json and type(request.json['done']) is not bool:
+    if 'done' in request.json and \
+            type(request.json['done']) is not bool:
         abort(400)
     task[0]['title'] = request.json.get('title', task[0]['title'])
-    task[0]['description'] = request.json.get('description', task[0]['description'])
+    task[0]['description'] = request.json.get('description',
+                                              task[0]['description'])
     task[0]['done'] = request.json.get('done', task[0]['done'])
     return jsonify({'task': task[0]})
-    
+
 
 @app.route('/todo/api/v1.0/tasks/<int:task_id>', methods=['DELETE'])
 def delete_task(task_id):
@@ -110,8 +114,5 @@ def get_task(task_id):
     return jsonify({'task': task[0]})
 
 
-
-
 if __name__ == '__main__':
     app.run(debug=True)
-        
