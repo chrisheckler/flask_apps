@@ -1,8 +1,11 @@
-#!/usr/bin/python3
+#!/usr/bin/python
 # Copyright (c) 2018 Chris Heckler <hecklerchris@hotmail.com>
+
 from flask import Flask, jsonify, abort, make_response, request, url_for
+from flask_httpauth import HTTPBasicAuth
 
 app = Flask(__name__)
+auth = HTTPBasicAuth()
 
 tasks = [
     {
@@ -19,7 +22,7 @@ tasks = [
     }
 ]
 
-
+# Helper function to convert ID into URI
 def make_public_task(task):
     new_task = {}
     for field in task:
@@ -31,6 +34,21 @@ def make_public_task(task):
     return new_task
 
 
+# Gets a password associated with username 'heckler'
+@auth.get_password
+def get_password(username):
+    if username == 'heckler':
+        return 'python'
+    return None
+
+
+# Error handling for unauthorized access
+@auth.error_handler
+def unauthorized():
+    return make_response(jsonify({'error': 'Unauthorized Access'}), 401)
+
+
+# Handles 404 errors more gracefully
 @app.errorhandler(404)
 def not_found(error):
     return make_response(jsonify({'error': 'Not Found'}), 404)
