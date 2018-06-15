@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 # Copyright (c) 2018 Chris Heckler <hecklerchris@hotmail.com>
-from flask import Flask, jsonify, abort, make_response
+from flask import Flask, jsonify, abort, make_response, request
 
 app = Flask(__name__)
 
@@ -28,6 +28,20 @@ def not_found(error):
 @app.route('/todo/api/v1.0/tasks', methods=['GET'])
 def get_tasks():
     return jsonify({'tasks': tasks})
+
+
+@app.route('/todo/api/v1.0/tasks', methods=['POST'])
+def create_task():
+    if not request.json or not 'title' in request.json:
+        abort(400)
+    task = {
+         'id': tasks[-1]['id'] + 1,
+         'title': request.json['title'],
+         'description': request.json.get('description', ""),
+         'done': False
+    }
+    tasks.append(task)
+    return jsonify({'task': task}), 201
 
 
 @app.route('/todo/api/v1.0/tasks/<int:task_id>', methods=['GET'])
