@@ -16,4 +16,38 @@ def create_app(config_name):
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.init_app(app)
 
-    return app
+    
+
+    @app.route('/bucketlists', methods=['POST', 'GET'])
+    def bucketlists():
+        if request.method == 'POST':
+            name = str(request.data.get('name', ''))
+            if name:
+                bucketlist = Bucketlist(name=name)
+                bucketlist.save()
+                response = jsonify({
+                    'id': bucketlist.id,
+                    'name': bucketlist.name,
+                    'date_created': bucketlist.date_created,
+                    'date_modified': bucketlist.date_modified
+                })
+                response.status_code = 201
+                return response
+        else:
+            # GET
+            bucketlists = Bucketlist.get_all()
+            results = {}
+
+            for bucklist in bucketlists:
+                obj = {
+                    'id': bucketlist.id,
+                    'name': bucketlist.name,
+                    'date_created': bucketlist.date_created,
+                    'date_modified': bucketlist.date_modified
+                }
+                results.apppend(obj)
+                response = jsonify(results)
+                response.status_code = 200
+                return response
+
+         return app
