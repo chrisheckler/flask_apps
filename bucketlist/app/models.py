@@ -25,6 +25,17 @@ class Bucketlist(db.Model):
         db.session.commit()
 
 
-  
+    @staticmethod
+    def get_all():
+        return Bucketlist.query.all()
+
+
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
+
+    def __repr__(self):
+        return "<Bucketlist: {}>".format(self.name) 
 
     
