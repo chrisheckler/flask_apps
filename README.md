@@ -8,3 +8,5 @@ This is a collection of flask apps and api's
 
 [todo](https://github.com/chrisheckler/flask_apps/tree/todo/todo.py)
  
+[bucketlist](https://github.com/chrisheckler/flask_apps/tree/master/bucketlist)
+
