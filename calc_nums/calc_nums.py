@@ -5,18 +5,18 @@ from flask import Flask, request, render_template, jsonify
 import json
 
 
-app = Flask(__name__)
+applicationlication = Flask(__name__)
 
 
-@app.route('/', methods=['GET'])
+@application.route('/', methods=['GET'])
 def index():
     """
-    Index page describing app
+    Index page describing application
     """
     return (render_template('home.html'), 200, None)
 
 
-@app.route('/api/print', methods=['GET'])
+@application.route('/api/print', methods=['GET'])
 def print_test():
     """
     Sends a request to localhost:5000/api/print and prints
@@ -27,7 +27,7 @@ def print_test():
     return json.dumps("{'a': %s, 'b': %s}" % (a, b))
 
 
-@app.route('/api/add', methods=['GET'])
+@application.route('/api/add', methods=['GET'])
 def add_nums():
     """
     Sends a request and returns the sum of the variables.
@@ -37,7 +37,7 @@ def add_nums():
     return jsonify(a + b)
 
 
-@app.route('/api/sub', methods=['GET'])
+@application.route('/api/sub', methods=['GET'])
 def sub_nums():
     """
     Sends a request and returns the subtraction of the variables.
@@ -47,7 +47,7 @@ def sub_nums():
     return jsonify(a - b)
 
 
-@app.route('/api/mult', methods=['GET'])
+@application.route('/api/mult', methods=['GET'])
 def mult_nums():
     """
     Sends a request and returns the product of the variables.
@@ -57,7 +57,7 @@ def mult_nums():
     return jsonify(a * b)
 
 
-@app.route('/api/div', methods=['GET'])
+@application.route('/api/div', methods=['GET'])
 def div_nums():
     """
     Sends a request and returns the divided nums.
@@ -74,4 +74,4 @@ def div_nums():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    application.run(debug=True)
