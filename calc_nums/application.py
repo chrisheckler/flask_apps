@@ -5,7 +5,7 @@ from flask import Flask, request, render_template, jsonify
 import json
 
 
-applicationlication = Flask(__name__)
+application = Flask(__name__)
 
 
 @application.route('/', methods=['GET'])
